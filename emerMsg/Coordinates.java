@@ -1,4 +1,4 @@
-package emerMsg;
+
 
 public class Coordinates {
 	double x; // X 좌표

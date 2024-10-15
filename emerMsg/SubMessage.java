@@ -1,4 +1,4 @@
-package emerMsg;
+
 
 public class SubMessage {
 
