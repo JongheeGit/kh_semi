@@ -13,7 +13,7 @@ spring:
     resources:
       add-mappings: true
   servlet:
-    multipart:
+    multipart: 
       enabled: true
       location: C:\\multipart\\upload_file\\temp
       max-file-size: 100MB

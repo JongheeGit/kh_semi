@@ -35,7 +35,7 @@ public class MapController {
             case "seoul":
                 return Seoul.getSeoulSvg();
             case "busan":
-                return Busan.getBusanSvg();
+                return Busan.getBusanSvg(); 
             case "daegu":
                 return Daegu.getDaeguSvg();
             case "incheon":

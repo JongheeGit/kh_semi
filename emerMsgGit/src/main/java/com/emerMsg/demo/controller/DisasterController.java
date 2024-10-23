@@ -17,5 +17,5 @@ public class DisasterController {
 
     private String findDisasterMessage(String region, String subregion) {
         return "재난문자 예시: " + region + " " + subregion + " 지역의 재난 안내";
-    }
+    } 
 }

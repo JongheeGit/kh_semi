@@ -8,6 +8,7 @@ public class EmerMsgGitApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EmerMsgGitApplication.class, args);
+		//
 	}
 
 }

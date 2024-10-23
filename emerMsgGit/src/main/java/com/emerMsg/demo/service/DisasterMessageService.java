@@ -8,3 +8,4 @@ public class DisasterMessageService {
         return address + " 지역에 재난문자가 없습니다.";
     }
 }
+ 

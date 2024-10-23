@@ -1,7 +1,7 @@
 package com.emerMsg.demo.subMap;
 
 public class Gyeonggi {
-    
+     
     public static String getGyeonggiSvg() {
         return """
             <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="800" height="945" viewBox="0 0 800 945" fill="gray" stroke="white" stroke-linecap="round" stroke-linejoin="round">
