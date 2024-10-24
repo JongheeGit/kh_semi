@@ -85,56 +85,6 @@
 	// 메세지가 없을 때의 코드 추가
 				</script>
 
-<!-- 
-		// msgBox에 메시지를 업데이트하는 함수
-function updateMsgBox(messages) {
-  
 
-    messages.forEach(message => {
-        msgBox.innerHTML += `
-            <tr>
-                <td>안전 메시지 번호: ${message.sn}</td>
-                <td>메시지 내용: ${message.msgCn}</td>
-                <td>접수 지역: ${message.rcptnRgnNm}</td>
-                <td>생성 날짜: ${new Date(message.crtDt).toLocaleString()}</td>
-                <td>등록 날짜: ${message.regYmd}</td>
-                <td>비상 단계: ${message.emegstepNm}</td>
-                <td>구분: ${message.dstSeNm}</td>
-                <td>수정 날짜: ${new Date(message.mdfcnYmd).toLocaleString()}</td>
-            </tr>
-        `;
-    });
-
-		// 페이지 로드 시 안전 메시지와 게시판 데이터 가져오기
-		window.onload = function() {
-			fetchSafetyMessage().then(message => {
-				updateMsgBox(message);
-			});
-			
-			axios.get('http://localhost:8111/api/board/list?cate=1000&title=')
-				.then((response) => {
-					const { data } = response;
-					let html = '';
-					data.forEach(item => {
-						html += `
-							<tr>
-								<td>${item.idx}</td>
-								<td>${cateToStr(item.cate)}</td>
-								<td><a href="/board/view/${item.idx}">${item.title}</a></td>
-								<td>${item.regID}</td>
-								<td>${item.regDate}</td>
-							</tr>
-						`;
-					});
-					document.querySelector('#tbody').innerHTML = html;
-				})
-				.catch((error) => {
-					console.log(error);
-				})
-				.finally(() => {
-					console.log('done');
-				});
-		};
-	 -->
 </body>
 </html>
