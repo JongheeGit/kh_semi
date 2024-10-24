@@ -9,13 +9,25 @@
 		table {
 			width: 100%;
 		}
-		#msgBox {
-			margin-top: 20px;
-			padding: 10px;
-			border: 1px solid #ccc;
-			background-color: #f9f9f9;
-		}
+       #msgBox table {
+        border: 2px solid;
+        border-collapse: collapse;
+        text-align: center;
+        margin-bottom: 30px;
+        margin-left: 40px;
+      }
+
+      th,td {
+        border: 1px solid;
+        padding: 10px 5px;
+      }
+
+      th {
+        background-color: teal;
+        color: white;
+      }
 	</style>
+	
 </head>
 <body>
 	
@@ -26,7 +38,7 @@
 	<p id="det"></p>
 		<table>
 			<thead>
-				<tr>
+				<tr> <!-- 내용 수정 -->
 					<th>일련번호</th>
 					<th>메시지 내용</th>
 					<th>수신 지역</th>
@@ -34,7 +46,7 @@
 					<th>등록 일자</th>
 					<th>긴급 단계명</th>
 					<th>재해 구분명</th>
-					<th>수정 일자</th>
+					<th>수정 일</th>
 				</tr>
 			</thead>
 			<tbody id="tbody">
