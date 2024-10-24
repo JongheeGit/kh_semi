@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.safetyMessageMap.mapper.MapMapper">
+
+    <insert id="insertMap" parameterType="com.example.safetyMessageMap.vo.MapVO">
+        INSERT INTO SMM.map (id, svg_data)
+        VALUES (#{regionId}, #{svgData})
+    </insert>
+
+    <select id="selectAllMaps" resultType="com.example.safetyMessageMap.vo.MapVO">
+        SELECT * FROM SMM.map
+    </select>
+
+    <select id="selectMapId" parameterType="String" resultType="com.example.safetyMessageMap.vo.MapVO">
+        SELECT * FROM SMM.map WHERE id = #{regionId}
+    </select>
+
+    <update id="updateMap" parameterType="com.example.safetyMessageMap.vo.MapVO">
+        UPDATE SMM.map
+        SET svg_data = #{svgData}
+        WHERE id = #{regionId}
+    </update>
+
+    <delete id="deleteMap" parameterType="String">
+        DELETE FROM SMM.map WHERE id = #{regionId}
+    </delete>
+</mapper>
