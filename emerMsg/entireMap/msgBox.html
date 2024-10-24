@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>메시지박스</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/axios.min.js}"></script>
+	<style>
+		table {
+			width: 100%;
+		}
+		#msgBox {
+			margin-top: 20px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			background-color: #f9f9f9;
+		}
+	</style>
+</head>
+<body>
+	
+	<header th:replace="~{fragments/header :: header}"></header>
+	
+	<main>
+	<div id="msgBox">
+	<p id="det"></p>
+		<table>
+			<thead>
+				<tr>
+					<th>일련번호</th>
+					<th>메시지 내용</th>
+					<th>수신 지역</th>
+					<th>생성 일자</th>
+					<th>등록 일자</th>
+					<th>긴급 단계명</th>
+					<th>재해 구분명</th>
+					<th>수정 일자</th>
+				</tr>
+			</thead>
+			<tbody id="tbody">
+			</tbody>
+			
+		</table>
+		</div>
+
+		
+			
+		
+	</main>
+	
+	<footer th:replace="~{fragments/footer :: footer}"></footer>
+	
+	<script>
+		
+	axios.get('http://localhost:8111/api/safety/message') // 수정필요
+				.then((response)  => {
+				const { data } = response;
+				let html = '';
+				
+				data.forEach(item => {
+					console.log(item);
+					html += `
+					<tr>
+						<td>${item.sn}</td>
+						<td>${item.msgCn}</td>
+						<td>${item.rcptnRgnNm}</td>
+						<td>${item.crdDt}</td> // new Date(item.crdDt).toLocaleString()
+						<td>${item.regYmd}</td>
+						<td>${item.emerStepNm}</td>
+						<td>${item.detSeNm}</td>
+						<td>${item.mdfcnYmd}</td> //new Date(message.mdfcnYmd).toLocaleString()
+					</tr>
+					`;
+										
+				});
+				document.querySelector('#tbody').innerHTML = html;
+		})
+			.catch((error) => {
+				console.log("문자를 가져오는 중 오류 발생", error);
+				return null;
+			})
+			.finally(() =>{
+				console.log('done');
+				});
+	// 메세지가 없을 때의 코드 추가
+				</script>
+
+<!-- 
+		// msgBox에 메시지를 업데이트하는 함수
+function updateMsgBox(messages) {
+  
+
+    messages.forEach(message => {
+        msgBox.innerHTML += `
+            <tr>
+                <td>안전 메시지 번호: ${message.sn}</td>
+                <td>메시지 내용: ${message.msgCn}</td>
+                <td>접수 지역: ${message.rcptnRgnNm}</td>
+                <td>생성 날짜: ${new Date(message.crtDt).toLocaleString()}</td>
+                <td>등록 날짜: ${message.regYmd}</td>
+                <td>비상 단계: ${message.emegstepNm}</td>
+                <td>구분: ${message.dstSeNm}</td>
+                <td>수정 날짜: ${new Date(message.mdfcnYmd).toLocaleString()}</td>
+            </tr>
+        `;
+    });
+
+		// 페이지 로드 시 안전 메시지와 게시판 데이터 가져오기
+		window.onload = function() {
+			fetchSafetyMessage().then(message => {
+				updateMsgBox(message);
+			});
+			
+			axios.get('http://localhost:8111/api/board/list?cate=1000&title=')
+				.then((response) => {
+					const { data } = response;
+					let html = '';
+					data.forEach(item => {
+						html += `
+							<tr>
+								<td>${item.idx}</td>
+								<td>${cateToStr(item.cate)}</td>
+								<td><a href="/board/view/${item.idx}">${item.title}</a></td>
+								<td>${item.regID}</td>
+								<td>${item.regDate}</td>
+							</tr>
+						`;
+					});
+					document.querySelector('#tbody').innerHTML = html;
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+				.finally(() => {
+					console.log('done');
+				});
+		};
+	 -->
+</body>
+</html>
