@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AddressController {
-
+ 
     private final String CONFIRM_KEY = "devU01TX0FVVEgyMDI0MTAxODE0MjMzMTExNTE2ODk=";  // API 인증키
 
     @GetMapping("/jusoPopup")

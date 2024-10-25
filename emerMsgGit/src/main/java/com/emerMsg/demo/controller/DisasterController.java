@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class DisasterController {
-
+ 
     @PostMapping("/disaster")
     @ResponseBody
     public String getDisasterMessage(@RequestParam("region") String region,
