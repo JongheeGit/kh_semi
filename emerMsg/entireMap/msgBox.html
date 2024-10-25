@@ -68,9 +68,7 @@
 				.then((response)  => {
 				const { data } = response;
 				let html = '';
-				//a
 				
-				if (data && data.length > 0) {
 				data.forEach(item => {
 					console.log(item);
 					html += `
@@ -87,11 +85,6 @@
 					`;
 										
 				});
-				}
-				else {
-		            
-		            html = `<tr><td colspan="8">당일 해당 지역에 발송된 메시지가 없습니다.</td></tr>`;
-				}
 				document.querySelector('#tbody').innerHTML = html;
 		})
 			.catch((error) => {
