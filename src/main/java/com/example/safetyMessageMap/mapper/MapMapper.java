@@ -2,6 +2,7 @@ package com.example.safetyMessageMap.mapper;
 
 import com.example.safetyMessageMap.vo.MapVO;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -25,4 +26,4 @@ public interface MapMapper {
         @Delete("DELETE FROM SMM.map WHERE id = #{id}")
         int deleteMap(String id);
     }
-}
+
