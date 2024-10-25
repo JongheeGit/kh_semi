@@ -1,15 +1,51 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    height: 100%;
-}
-	
 body {
   font-family: Arial, sans-serif;
+  height: 100%;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
+  overflow: hidden;
+}
+
+#korea-map { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  transform: translateX(100px);
+}
+
+#region-map { 
+  height: 70%;
+  width: 50%;
+  display: none;
+  position: fixed;
+  box-sizing: border-box;
+  padding: 10px;
+	transform: translateY(-15%);
+}
+
+#xButton {
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    left: 20px; 
+    font-size: 12px;
+    color: white;
+    z-index: 1000;
+    display: block;
+    padding: 5px;
+}
+
+#msgBox {
+  height: auto;
+  width: auto;
+  display: none;
+  padding: 10px;
+	transform: translateX(50%);
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
 }
 
 header {
@@ -17,13 +53,11 @@ header {
   color: #fff;
   padding: 10px 20px;
   text-align: center;
-  top: 0;
-  width: 100%;
 }
 
 nav {
   margin: 10px 0;
-} 
+}
 
 nav a {
   color: #fff;
@@ -35,27 +69,6 @@ main {
   padding: 20px;
 }
 
-#map-container {
-  display: flex;
-  margin-top: 10px;
-}
-
-#korea-map {
-  flex: 1;
-  height: 75%;
-  width: 75%;
-  position: relative;
-}
-
-#region-map {
-  flex: 1;
-  height: 50%;
-  width: 25%;
-  z-index: 1;
-	transform: scale(0.8);
-  transform-origin: top left;
-}
-
 path {
   transition: 0.5s;
 }
@@ -63,19 +76,6 @@ path {
 path:hover {
   cursor: pointer;
   fill: yellowgreen;
-}
-
-#info-section {
-  position: fixed;
-  right: 20px;
-  bottom: 50px;
-  width: 250px;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-	z-index: 2;
 }
 
 .clicked {

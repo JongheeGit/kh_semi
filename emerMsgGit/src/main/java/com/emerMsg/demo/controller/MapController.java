@@ -29,13 +29,12 @@ public class MapController {
     @GetMapping("/map")
     @ResponseBody
     public String getMap(@RequestParam("region") String region) {
-        System.out.println("Requested region: " + region);
         // 지역에 따라 다른 중분류 SVG 데이터를 반환
         switch (region) {
             case "seoul":
                 return Seoul.getSeoulSvg();
             case "busan":
-                return Busan.getBusanSvg(); 
+                return Busan.getBusanSvg();
             case "daegu":
                 return Daegu.getDaeguSvg();
             case "incheon":
@@ -67,7 +66,7 @@ public class MapController {
             case "jeju":
                 return Jeju.getJejuSvg();
             default:
-                return "<p>지역 정보를 찾을 수 없습니다.</p>";
+                return "";
         }
     }
 }

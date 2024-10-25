@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>메시지박스</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/axios.min.js}"></script>
+	<style>
+		table {
+			width: 100%;
+		}
+       #msgBox table {
+        border: 2px solid;
+        border-collapse: collapse;
+        text-align: center;
+        margin-bottom: 30px;
+        margin-left: 40px;
+      }
+
+      th,td {
+        border: 1px solid;
+        padding: 10px 5px;
+      }
+
+      th {
+        background-color: teal;
+        color: white;
+      }
+	</style>
+	
+</head>
+<body>
+	
+	<header th:replace="~{fragments/header :: header}"></header>
+	
+	<main>
+	<div id="msgBox">
+	<p id="det"></p>
+		<table>
+			<thead>
+				<tr> <!-- 내용 수정 -->
+					<th>일련번호</th>
+					<th>메시지 내용</th>
+					<th>수신 지역</th>
+					<th>생성 일자</th>
+					<th>등록 일자</th>
+					<th>긴급 단계명</th>
+					<th>재해 구분명</th>
+					<th>수정 일</th>
+				</tr>
+			</thead>
+			<tbody id="tbody">
+			</tbody>
+			
+		</table>
+		</div>
+
+		
+			
+		
+	</main>
+	
+	<footer th:replace="~{fragments/footer :: footer}"></footer>
+	
+	<script>
+		
+	axios.get('http://localhost:8111/api/safety/message') // 수정필요
+				.then((response)  => {
+				const { data } = response;
+				let html = '';
+				//a
+				
+				if (data && data.length > 0) {
+				data.forEach(item => {
+					console.log(item);
+					html += `
+					<tr>
+						<td>${item.sn}</td>
+						<td>${item.msgCn}</td>
+						<td>${item.rcptnRgnNm}</td>
+						<td>${item.crdDt}</td> // new Date(item.crdDt).toLocaleString()
+						<td>${item.regYmd}</td>
+						<td>${item.emerStepNm}</td>
+						<td>${item.detSeNm}</td>
+						<td>${item.mdfcnYmd}</td> //new Date(message.mdfcnYmd).toLocaleString()
+					</tr>
+					`;
+										
+				});
+				}
+				else {
+		            
+		            html = `<tr><td colspan="8">당일 해당 지역에 발송된 메시지가 없습니다.</td></tr>`;
+				}
+				document.querySelector('#tbody').innerHTML = html;
+		})
+			.catch((error) => {
+				console.log("문자를 가져오는 중 오류 발생", error);
+				return null;
+			})
+			.finally(() =>{
+				console.log('done');
+				});
+	// 메세지가 없을 때의 코드 추가
+				</script>
+
+
+</body>
+</html>
