@@ -3,96 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="/css/entireStyle.css">
     <title>긴급재난문자</title>
-		<style>
-					body, html {
-			        margin: 0;
-			        padding: 0;
-			        overflow: hidden;
-			        height: 100%;
-			      } 
-						
-		      body {
-		        font-family: Arial, sans-serif;
-		        margin: 0;
-		        padding: 0;
-		        background-color: #f4f4f4;
-		      }
-
-		      header {
-		        background: #333;
-		        color: #fff;
-		        padding: 10px 20px;
-		        text-align: center;
-		        top: 0;
-		        width: 100%;
-		      }
-					
-					nav {
-		        margin: 10px 0;
-		      }
-					
-		      nav a {
-		        color: #fff;
-		        margin: 0 15px;
-		        text-decoration: none;
-		      }
-					
-		      main {
-		        padding: 20px;
-		      }
-
-					#map-container {
-					  display: flex;
-					  margin-top: 10px;
-					}
-
-					#korea-map {
-					  flex: 1;
-					  height: 75%;
-					  width: 75%;
-					  position: relative;
-						margin-left: 5%;
-					}
-
-					#region-map {
-					  flex: 1;
-					  height: 50%;
-					  width: 25%;
-					  z-index: 1;
-						transform: scale(0.8);
-					  transform-origin: top left;
-					}
-
-		      path {
-		        transition: 0.5s;
-		      }
-
-		      path:hover {
-		        cursor: pointer;
-		        fill: orange;
-		      }
-
-		      #info-section {
-		        position: fixed;
-		        right: 20px;
-		        bottom: 50px;
-		        width: 250px;
-		        padding: 10px;
-		        background-color: #f0f0f0;
-		        border: 1px solid #ccc;
-		        border-radius: 8px;
-		        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-						z-index: 2;
-		      }
-		    </style>
-				
 				<script type="text/javascript">
-				    function openAddressPopup() {
+				    function openAddressPopup() { // 주소 팝업 생성
 				        var pop = window.open("/jusoPopup", "pop", "width=570,height=420, scrollbars=yes, resizable=yes");
 				    }
 
-				    function jusoCallBack(roadFullAddr) {
+				    function jusoCallBack(roadFullAddr) { // 주소 선택시 값 반환
 				        document.getElementById("address").innerText = roadFullAddr;
 
 				        var addressParts = roadFullAddr.split(' ');
@@ -122,47 +40,65 @@
 				        fetch(`/map?region=${region}`)
 				            .then(response => response.text())
 				            .then(data => {
-				                console.log("Map data received: ", data);
 				                document.getElementById('region-map').innerHTML = data; 
-				                addClickEventToPaths(); // 지도 로드 후 클릭 이벤트 다시 추가
+				                addClickEventToPaths();
 				            })
 				            .catch(error => console.error('Error loading the map:', error));
 				    }
 
-				    function addClickEventToPaths() {
-				        const paths = document.querySelectorAll('#region-map path');
-				        paths.forEach((path) => {
-				            path.addEventListener('click', () => {
-				                const id = path.getAttribute('id');
-				                console.log(`${id} 클릭됨`);
+						function addClickEventToPaths() {
+						    const paths = document.querySelectorAll('#region-map path');
 
-				                // 지역명 추출 및 재난 문자 조회 요청
-				                var addressParts = id.split('-'); // ID에서 지역 정보 추출하는 방식
-				                var region = addressParts[0]; // 시도명
-				                var subregion = addressParts[1]; // 시군구명
+						    paths.forEach((path) => {
+						        path.addEventListener('click', () => {
+						            // 기존에 클릭된 상태의 요소에서 .clicked 클래스 제거
+						            paths.forEach(p => p.classList.remove('clicked'));
 
-				                fetch("/disaster", {
-				                    method: 'POST',
-				                    headers: {
-				                        'Content-Type': 'application/x-www-form-urlencoded'
-				                    },
-				                    body: new URLSearchParams({
-				                        'region': region,
-				                        'subregion': subregion
-				                    })
-				                })
-				                .then(response => response.text())
-				                .then(data => {
-				                    document.getElementById("disaster-message").innerText = data;
-				                })
-				                .catch(error => console.error('Error:', error));
-				            });
-				        });
-				    }
+						            // 현재 클릭된 path에 .clicked 클래스 추가
+						            path.classList.add('clicked');
 
-				    document.addEventListener('DOMContentLoaded', () => {
-				        addClickEventToPaths(); // 초기 로딩 시에도 클릭 이벤트 추가
-				    });
+						            const id = path.getAttribute('id');
+						            console.log(`${id} 클릭됨`);
+
+						            // 지역명 추출 및 재난 문자 조회 요청
+						            var addressParts = id.split('-'); // ID에서 지역 정보 추출하는 방식
+						            var region = addressParts[0]; // 시도명
+						            var subregion = addressParts[1]; // 시군구명
+
+						            fetch("/disaster", {
+						                method: 'POST',
+						                headers: {
+						                    'Content-Type': 'application/x-www-form-urlencoded'
+						                },
+						                body: new URLSearchParams({
+						                    'region': region,
+						                    'subregion': subregion
+						                })
+						            })
+						            .then(response => response.text())
+						            .then(data => {
+						                document.getElementById("disaster-message").innerText = data;
+						            })
+						            .catch(error => console.error('Error:', error));
+						        });
+						    });
+						}
+
+						document.addEventListener('DOMContentLoaded', () => {
+						    addClickEventToPaths(); // 초기 로딩 시에도 클릭 이벤트 추가
+						});
+						
+						document.addEventListener("DOMContentLoaded", function() {
+						  const paths = document.querySelectorAll("#korea-map path, #region-map path");
+
+						  paths.forEach(path => {
+						    path.addEventListener("click", function() {
+						      paths.forEach(p => p.classList.remove("clicked"));
+
+						      this.classList.add("clicked");
+						    });
+						  });
+						});
 				</script>
 
   </head>
@@ -198,6 +134,7 @@
           viewBox="0 0 1000 900"
           stroke-linecap="round"
           stroke-linejoin="round"
+					fill="gray"
         >
 				
 					<g id="seoul" onclick="loadMap('seoul')">
