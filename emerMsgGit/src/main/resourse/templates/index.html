@@ -5,127 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="/css/entireStyle.css">
     <title>긴급재난문자</title>
-		<script type="text/javascript">
-		    function openAddressPopup() { // 주소 팝업 생성
-		        var pop = window.open("/jusoPopup", "pop", "width=570,height=420, scrollbars=yes, resizable=yes");
-		    }
-
-		    function jusoCallBack(roadFullAddr) { // 주소 선택시 값 반환
-		        document.getElementById("address").innerText = roadFullAddr;
-
-		        var addressParts = roadFullAddr.split(' ');
-		        var region = addressParts[0]; // 시도명
-		        var subregion = addressParts[1]; // 시군구명
-
-		        fetch("/disaster", {
-		            method: 'POST',
-		            headers: {
-		                'Content-Type': 'application/x-www-form-urlencoded'
-		            },
-		            body: new URLSearchParams({
-		                'region': region,
-		                'subregion': subregion
-		            })
-		        })
-		        .then(response => response.text())
-		        .then(data => {
-		            document.getElementById("disaster-message").innerText = data;
-		        })
-		        .catch(error => console.error('Error:', error));
-		    }
-
-		    function loadMap(region) {
-		        console.log("loadMap called for region: " + region);
-
-		        fetch(`/map?region=${region}`)
-		            .then(response => response.text())
-		            .then(data => {
-		                document.getElementById('region-map').innerHTML = data; 
-		                addClickEventToPaths();
-		            })
-		            .catch(error => console.error('Error loading the map:', error));
-		    }
-
-		    function extractRegionAndSubregion(address) {
-		        var addressParts = address.split('-');
-		        return {
-		            region: addressParts[0],
-		            subregion: addressParts[1] ? addressParts[1] : '' // subregion이 없을 경우 빈 문자열 반환
-		        };
-		    }
-
-		    function addClickEventToPaths() {
-		        const koreaPaths = document.querySelectorAll('#korea-map path');
-		        koreaPaths.forEach((path) => {
-		            path.addEventListener('click', () => {
-		                const id = path.getAttribute('id');
-		                console.log(`${id} 클릭됨`);
-
-		                // korea-map 숨기기
-		                document.getElementById('korea-map').style.display = 'none';
-		                
-		                // region-map과 msgBox 표시
-		                document.getElementById('region-map').style.display = 'block';
-		                document.getElementById('msgBox').style.display = 'block';
-
-		                // load the region map
-		                loadMap(id);
-		            });
-		        });
-
-		        const regionPaths = document.querySelectorAll('#region-map path');
-		        regionPaths.forEach((path) => {
-		            path.addEventListener('click', () => {
-		                // 기존에 클릭된 상태의 요소에서 .clicked 클래스 제거
-		                regionPaths.forEach(p => p.classList.remove('clicked'));
-
-		                // 현재 클릭된 path에 .clicked 클래스 추가
-		                path.classList.add('clicked');
-
-		                const id = path.getAttribute('id');
-		                console.log(`${id} 클릭됨`);
-		                
-		                // 지역명 추출 및 재난 문자 조회 요청
-		                var { region, subregion } = extractRegionAndSubregion(id);
-		                const selectedAddress = `${region} ${subregion}`.trim();
-
-		                // 선택된 주소 설정
-		                document.getElementById("address").innerText = selectedAddress;
- 
-		                fetch("/disaster", {
-		                    method: 'POST',
-		                    headers: {
-		                        'Content-Type': 'application/x-www-form-urlencoded'
-		                    },
-		                    body: new URLSearchParams({
-		                        'region': region,
-		                        'subregion': subregion
-		                    })
-		                })
-		                .then(response => response.text())
-		                .then(data => {
-		                    // 재난 문자 설정
-		                    document.getElementById("disaster-message").innerText = data;
-		                })
-		                .catch(error => console.error('Error:', error));
-		            });
-		        });
-		    }
-
-		    document.addEventListener('DOMContentLoaded', () => {
-		        addClickEventToPaths(); // 초기 로딩 시 클릭 이벤트 추가
-
-		        const xButton = document.getElementById('xButton');
-		        xButton.style.display = 'block';
-		        xButton.addEventListener('click', () => {
-		            // 초기 상태로 돌아가기
-		            window.location.reload();
-		        });
-		    });
-		</script>
-
-
-
   </head>
 	
   <body>
@@ -219,5 +98,6 @@
 					<div id="region-map"></div>
       </div>
     </main>
+		<script src="/js/script.js"></script>
 		</body>
 </html>
