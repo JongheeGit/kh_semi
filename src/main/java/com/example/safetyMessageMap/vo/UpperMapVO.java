@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 
-public class MapVO {
+public class UpperMapVO {
     private String id;
     private String svgData;
 }

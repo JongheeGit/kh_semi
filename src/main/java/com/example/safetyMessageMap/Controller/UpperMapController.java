@@ -91,3 +91,14 @@ public class UpperMapController {
         return svgData;
     }
 }
+
+//<script>
+//    fetch('/getUmSeoulSvg')
+//        .then(response => response.text())
+//        .then(svgData => {
+//            document.getElementById('svgContainer').innerHTML = svgData;
+//        })
+//        .catch(error => {
+//            console.error('SVG 로드 실패:', error);
+//        });
+//</script>
